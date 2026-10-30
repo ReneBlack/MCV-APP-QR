@@ -4,6 +4,8 @@ Una persona escanea el QR fijo, escribe su nombre y qué retiró, y pulsa **Regi
 
 La aplicación usa Google Apps Script. No necesita un servidor propio ni claves API en el navegador. El nombre lo declara cada persona; no hay verificación de identidad ni control de inventario.
 
+El formulario incorpora la marca MCV en azul marino y el logo horizontal dentro de `Index.html`. No hay que subir imágenes adicionales ni hacer pública una carpeta de Drive. Para aplicar cambios visuales a una instalación existente, reemplaza ese HTML y actualiza la implementación existente con una nueva versión para conservar el mismo enlace y QR.
+
 ## Publicar el formulario
 
 1. Crea una planilla en Google Sheets con la cuenta que administrará el registro. No la hagas pública.
