@@ -8,7 +8,12 @@ function doGet() {
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
-/** Run once from the script editor bound to the destination spreadsheet. */
+/** Editor entry point: Apps Script hides underscore-suffixed functions in its selector. */
+function configurarPlanilla() {
+  return setup_();
+}
+
+/** Requires the bound spreadsheet's editor context, which web app calls do not have. */
 function setup_() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   if (!spreadsheet) throw new Error('Abre este proyecto desde Extensiones → Apps Script en tu planilla.');

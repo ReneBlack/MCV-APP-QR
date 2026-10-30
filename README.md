@@ -10,7 +10,7 @@ La aplicación usa Google Apps Script. No necesita un servidor propio ni claves 
 2. En **Archivo → Configuración**, comprueba la **zona horaria** del taller. La fecha de los registros y la confirmación usan esa zona.
 3. Abre **Extensiones → Apps Script**. Reemplaza el contenido del archivo `Código.gs` por [Code.gs](Code.gs).
 4. Añade un archivo de tipo HTML llamado **Index** y copia [Index.html](Index.html).
-5. Guarda y ejecuta **`setup_`** desde el selector de funciones del editor. Autoriza el acceso a tus hojas de cálculo. Esta función crea la pestaña **Registros**, sus encabezados y una columna técnica oculta para evitar duplicados. Se puede volver a ejecutar sin borrar filas. No cambies esos encabezados ni borres la columna oculta.
+5. Guarda el código. En la barra superior del editor, abre el selector que inicialmente muestra **doGet**, selecciona **`configurarPlanilla`** y pulsa **▶ Ejecutar**. Autoriza el acceso a tus hojas de cálculo. Esta función crea la pestaña **Registros**, sus encabezados y una columna técnica oculta para evitar duplicados. Se puede volver a ejecutar sin borrar filas. No cambies esos encabezados ni borres la columna oculta. La función interna `setup_` no aparece en el selector porque Apps Script oculta las funciones terminadas en `_`.
 6. Pulsa **Implementar → Nueva implementación → Aplicación web**. Selecciona **Ejecutar como: Yo** y **Quién tiene acceso: Cualquiera**. La opción debe permitir usuarios anónimos; algunas organizaciones de Google Workspace la restringen.
 7. Copia la **URL de la aplicación web**, terminada en **`/exec`**. El enlace `/dev` es solo para pruebas del propietario.
 8. Abre `/exec` en una ventana de incógnito, sin iniciar sesión en Google. Envía un retiro de prueba y comprueba su nombre, objeto y fecha/hora en la planilla. Si aparece una pantalla de acceso a Google, revisa el acceso de la implementación antes de imprimir.
@@ -50,4 +50,14 @@ No hay compilación: `Code.gs` e `Index.html` se ejecutan directamente en Apps S
 
 Abre la planilla para consultar, filtrar o descargar los datos con **Archivo → Descargar → Microsoft Excel (.xlsx)**. La fecha se guarda como fecha real, no como texto. El formulario confirma solo cuando el servidor termina de escribir; si falla, conserva los campos para reintentar. Evita pulsar atrás y reenviar un retiro que ya recibiste como confirmado.
 
-El sistema necesita conexión a Internet y está pensado para el uso ligero de un taller. Está sujeto a las cuotas y disponibilidad de Google Apps Script y Sheets. Para cambiar la planilla de destino, abre el script desde la nueva planilla y vuelve a ejecutar `setup_`; no introduzcas credenciales en el código.
+El sistema necesita conexión a Internet y está pensado para el uso ligero de un taller. Está sujeto a las cuotas y disponibilidad de Google Apps Script y Sheets. Para cambiar la planilla de destino, abre el script desde la nueva planilla y vuelve a ejecutar `configurarPlanilla`; no introduzcas credenciales en el código.
+
+Si ya copiaste una versión anterior que solo muestra **doGet** y **registerWithdrawal**, añade al final de `Código.gs` lo siguiente, guarda y selecciona **configurarPlanilla**:
+
+```js
+function configurarPlanilla() {
+  return setup_();
+}
+```
+
+La configuración exige ejecutarse desde el editor vinculado a la planilla. Las llamadas del formulario público no tienen una planilla activa y se rechazan antes de modificar datos o configuración.

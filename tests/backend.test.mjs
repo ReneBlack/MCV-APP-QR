@@ -188,6 +188,26 @@ test('setup exige ejecutarse desde una planilla vinculada', () => {
   assert.equal(runtime.properties.has('SPREADSHEET_ID'), false);
 });
 
+test('configurarPlanilla ofrece una entrada visible en el editor y prepara la hoja sin borrar registros', () => {
+  const runtime = createRuntime({ configured: false, sheetExists: false, initialRows: [] });
+  assert.match(runtime.context.configurarPlanilla(), /America\/Santiago/);
+  assert.deepEqual(runtime.rows, [HEADERS]);
+  assert.equal(runtime.properties.get('SPREADSHEET_ID'), 'sheet-local-test');
+  runtime.context.registerWithdrawal(valid());
+  const snapshot = runtime.rows.map(row => Array.from(row));
+  runtime.context.configurarPlanilla();
+  assert.deepEqual(runtime.rows, snapshot);
+});
+
+test('configurarPlanilla rechaza llamadas de la web app sin una planilla activa antes de cambiar datos', () => {
+  const runtime = createRuntime({ configured: false, hasActiveSpreadsheet: false });
+  assert.throws(() => runtime.context.configurarPlanilla(), /Extensiones/);
+  assert.equal(runtime.properties.has('SPREADSHEET_ID'), false);
+  assert.deepEqual(runtime.rows, [HEADERS]);
+  assert.equal(runtime.state.appendCount, 0);
+  assert.equal(runtime.state.releaseCount, 0);
+});
+
 test('doGet sirve únicamente el formulario e incluye viewport para móviles', () => {
   const runtime = createRuntime();
   const output = runtime.context.doGet();
