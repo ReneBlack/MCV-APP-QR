@@ -4,41 +4,41 @@
     <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#155b52">
-    <title>Registrar retiro · Almacén</title>
+    <meta name="theme-color" content="#12356b">
+    <title>Registrar retiro · MCV Almacén</title>
     <style>
       :root {
         color-scheme: light;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: #163c36;
-        background: #f3f6f1;
+        color: #152b4a;
+        background: #f4f6fa;
         font-synthesis: none;
-        --green: #155b52;
-        --green-dark: #0d433c;
-        --muted: #536760;
+        --brand: #12356b;
+        --brand-hover: #0c2751;
+        --muted: #59677b;
       }
       * { box-sizing: border-box; }
       body { margin: 0; min-height: 100vh; min-height: 100svh; }
-      .page { width: min(100% - 32px, 480px); margin: 0 auto; padding: 38px 0 28px; }
-      .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; font-size: 14px; font-weight: 700; letter-spacing: .02em; }
-      .brand-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: white; background: var(--green); }
-      .card { padding: 30px 26px 26px; background: white; border: 1px solid #dce5db; border-radius: 22px; box-shadow: 0 8px 32px #244b3710; }
-      .eyebrow { display: inline-block; margin: 0 0 14px; padding: 6px 10px; border-radius: 6px; background: #f5edce; color: #66501a; font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+      .page { width: min(100% - 32px, 480px); margin: 0 auto; padding: 20px 0 28px; }
+      .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; font-size: 14px; font-weight: 700; letter-spacing: .02em; }
+      .brand-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: white; background: var(--brand); }
+      .card { padding: 30px 26px 26px; background: white; border: 1px solid #dce3ed; border-radius: 22px; box-shadow: 0 8px 32px #152b4a0a; }
+      .eyebrow { display: inline-block; margin: 0 0 14px; padding: 6px 10px; border-radius: 6px; background: #eaf0f9; color: #254b7a; font-size: 11px; font-weight: 750; letter-spacing: .035em; }
       h1 { margin: 0 0 12px; font-size: clamp(28px, 7vw, 34px); line-height: 1.12; letter-spacing: -.035em; }
       .intro { margin: 0 0 28px; color: var(--muted); font-size: 16px; line-height: 1.55; }
       fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
       .field { margin-bottom: 22px; }
       label { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 650; }
-      input, textarea { display: block; width: 100%; padding: 13px 14px; border: 1px solid #a8bab0; border-radius: 10px; background: #fff; color: #173d36; font: inherit; font-size: 16px; line-height: 1.45; transition: border-color .15s, box-shadow .15s; }
-      input::placeholder, textarea::placeholder { color: #6f7e76; opacity: 1; }
+      input, textarea { display: block; width: 100%; padding: 13px 14px; border: 1px solid #8293a8; border-radius: 10px; background: #fff; color: #152b4a; font: inherit; font-size: 16px; line-height: 1.45; transition: border-color .15s, box-shadow .15s; }
+      input::placeholder, textarea::placeholder { color: #65748a; opacity: 1; }
       textarea { min-height: 112px; resize: vertical; }
-      input:focus, textarea:focus { border-color: var(--green); outline: 3px solid #155b5220; }
+      input:focus, textarea:focus { border-color: var(--brand); outline: 3px solid #2b67ae; outline-offset: 2px; }
       .help { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-      button { display: flex; justify-content: center; align-items: center; gap: 9px; width: 100%; min-height: 52px; margin: 4px 0 0; padding: 13px 18px; border: 0; border-radius: 11px; background: var(--green); color: white; font: inherit; font-size: 16px; font-weight: 650; cursor: pointer; touch-action: manipulation; }
-      button:hover { background: var(--green-dark); }
-      button:focus-visible { outline: 3px solid #c3a23d; outline-offset: 3px; }
-      button:disabled { background: #48756d; cursor: wait; }
-      fieldset:disabled input, fieldset:disabled textarea { background: #f6f8f5; color: #536760; }
+      button { display: flex; justify-content: center; align-items: center; gap: 9px; width: 100%; min-height: 52px; margin: 4px 0 0; padding: 13px 18px; border: 0; border-radius: 11px; background: var(--brand); color: white; font: inherit; font-size: 16px; font-weight: 650; cursor: pointer; touch-action: manipulation; }
+      button:hover { background: var(--brand-hover); }
+      button:focus-visible { outline: 3px solid #2b67ae; outline-offset: 3px; }
+      button:disabled { background: #586f92; cursor: wait; }
+      fieldset:disabled input, fieldset:disabled textarea { background: #f4f6fa; color: #59677b; }
       .spinner { width: 17px; height: 17px; border: 2px solid #ffffff55; border-top-color: white; border-radius: 50%; animation: spin .75s linear infinite; }
       .spinner[hidden] { display: none; }
       .automatic { display: flex; justify-content: center; align-items: flex-start; gap: 6px; margin: 16px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; text-align: center; }
@@ -51,7 +51,7 @@
       noscript p { padding: 14px; border: 1px solid #e9b6ad; border-radius: 10px; color: #8c2929; background: #fff2ef; }
       @keyframes spin { to { transform: rotate(360deg); } }
       @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-      @media (max-width: 360px) { .page { width: min(100% - 24px, 480px); padding-top: 24px; } .card { padding: 24px 20px; } }
+      @media (max-width: 360px) { .page { width: min(100% - 24px, 480px); padding-top: 16px; } .card { padding: 24px 20px; } }
     </style>
   </head>
   <body>
@@ -63,9 +63,9 @@
         Almacén del taller
       </div>
       <section class="card" aria-labelledby="page-title">
-        <p class="eyebrow">Registro de materiales</p>
+        <p class="eyebrow">Registro MCV Almacén</p>
         <h1 id="page-title">¿Qué retiraste?</h1>
-        <p class="intro">Anota tu nombre y lo que sacaste del almacén. Así mantenemos el registro al día.</p>
+        <p class="intro">Anota tu nombre y lo que sacaste del almacén.</p>
         <noscript><p>Activa JavaScript en tu navegador para registrar el retiro.</p></noscript>
         <p id="notice" class="notice" role="status" aria-live="polite" aria-atomic="true"></p>
         <form id="withdrawal-form">
