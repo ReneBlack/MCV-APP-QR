@@ -33,6 +33,32 @@ Usa el **enlace real** del paso anterior, no el ejemplo. Abre el archivo generad
 
 Para modificar la aplicación conservando el mismo QR: **Implementar → Administrar implementaciones → Editar → Nueva versión → Implementar** sobre la implementación existente. Crear otra implementación puede generar un enlace diferente y obligar a reimprimir el QR.
 
+## Activar copia y registro nuevo cada mes
+
+Esta opción es voluntaria. Si no la activas, los registros continúan acumulándose como antes. Con la opción activada, cada cierre mensual guarda un archivo separado en Google Drive y prepara una pestaña **Registros** vacía para el mes siguiente. El formulario, el enlace y el QR se conservan.
+
+1. Desde la planilla principal, abre **Extensiones → Apps Script**. Reemplaza **todo** el contenido de `Código.gs` por la versión actual de [Code.gs](Code.gs). Si añadiste manualmente `configurarPlanilla`, no la añadas otra vez: ya viene incluida. No necesitas cambiar `Index.html`.
+2. Si usas un manifiesto con `oauthScopes` explícitos, copia también [appsscript.json](appsscript.json): ahora incluye permisos para crear copias en Drive y gestionar el activador. Puedes mostrar este archivo desde **Configuración del proyecto → Mostrar el archivo de manifiesto appsscript.json**. Si tu manifiesto tiene otras opciones propias, conserva esas opciones y añade los tres permisos que aparecen en el archivo del proyecto.
+3. Guarda y ejecuta **configurarPlanilla** desde el selector superior del editor. Los registros existentes se conservan.
+4. Actualiza primero el formulario que usa el QR: **Implementar → Administrar implementaciones → Editar → Nueva versión → Implementar**, sobre la implementación existente. Autoriza de nuevo si se solicita. Mantén **Ejecutar como: Yo** y acceso **Cualquiera**. No crees otra implementación ni cambies el QR. Así el formulario y la tarea mensual usarán el mismo código cuando actives los cierres.
+5. Selecciona **configurarRespaldoMensual** y pulsa **▶ Ejecutar**, usando la misma cuenta que administra la aplicación. Acepta los permisos adicionales de Google para Drive y para la automatización. Ejecutar otra vez esta función reutiliza la carpeta y evita instalar activadores duplicados de esa cuenta.
+6. Se crea la carpeta **Respaldos del almacén** en tu Google Drive. El vínculo aparece en **Registro de ejecución**. La carpeta y las nuevas copias se crean con acceso restringido; puedes compartir la carpeta con el correo de tu jefe como **Lector** para que vea los archivos que se vayan agregando.
+
+### Qué sucede al cambiar de mes
+
+- El activador se programa para el **día 1, alrededor de la 01:00**, según la zona horaria de la planilla. Google no garantiza un minuto exacto. Si llega un retiro antes de que se ejecute el activador, el propio registro hace el cierre pendiente antes de guardar ese retiro.
+- La tarea se ejecuta en Google aunque el computador esté apagado o nadie tenga abierta la planilla.
+- Se copia la pestaña del mes que terminó a un **archivo de Google Sheets separado**, dentro de la carpeta de respaldos. Se comprueba que coincidan los nombres, objetos, fechas e identificadores antes de cambiar la pestaña principal.
+- Los datos anteriores también permanecen en la planilla original, en una pestaña como **Registros_2026-10**. Se crea una nueva **Registros** con los mismos encabezados. No se borran las filas anteriores.
+- Si ya había registros acumulados cuando activaste la opción, la **primera copia incluye todos esos registros**. Los cierres posteriores separan los meses desde la activación.
+- Si falla la copia o su verificación, el cierre se detiene conservando los datos. El siguiente activador o intento de registro vuelve a intentar completar el cierre. Si el formulario informa del error, el encargado debe revisar los permisos y el espacio disponible en Drive antes de reintentar.
+
+No renombres ni borres las pestañas históricas ni la carpeta de respaldos: se usan para recuperar cierres interrumpidos y reconocer reintentos sin duplicarlos. Las copias mensuales conservan los estados al cierre, no cada edición intermedia. Al estar en la misma cuenta de Google, puedes además descargar un Excel y guardarlo en otro lugar si necesitas un respaldo independiente de esa cuenta.
+
+Para revisar la automatización, abre el icono de **reloj / Activadores** de Apps Script: debe aparecer un único activador de tu cuenta para **cerrarMesAutomatico_**.
+
+La instalación y las pruebas de este repositorio no activan nada en tu cuenta de Google. La cuenta administradora debe completar estos pasos y comprobar en Google el primer cierre real.
+
 ## Desarrollo y pruebas
 
 ```sh
