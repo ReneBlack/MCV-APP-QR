@@ -1,0 +1,18 @@
+{
+  "name": "mcv-app-qr",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Registro público de retiros del almacén con Google Sheets",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node tools/preview.mjs",
+    "test": "node --test --test-isolation=none tests/*.test.mjs",
+    "qr": "node tools/create-qr.mjs"
+  },
+  "devDependencies": {
+    "qrcode-generator": "2.0.4"
+  }
+}
